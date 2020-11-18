@@ -1,31 +1,31 @@
 package com.e2e.exercises.exercise1;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+
 import org.testng.annotations.Test;
+
+import com.e2e.exercises.jsonperformer.DeviceDetailsJSONReader;
+import com.e2e.exercises.jsonperformer.DeviceDetailsJSONWriter;
+
+
 
 public class BaseTest {
 
 	@Test
-	public void test1() {
+	public void test1() throws FileNotFoundException {
 		
-		/** 
-		 * FIRST TEST COMES HERE:
-		 * 
-		 * Create the below JSON object using any library.
-		 * Print the same in the console and also save the object in a file in src/main/resources.
-		 * Assert the created JSON is as expected.
-		 * */
-
+		//Calling Json Writer Class & Its Assertion
+		DeviceDetailsJSONWriter.DeviceJSONWriter(null);
+		
 	}
-
-	@Test
-	public void test2() {
+	
+	@Test(dependsOnMethods = "test1")
+	public void test2() throws IOException {
 		
-		/**
-		 * SECOND TEST COMES HERE:
-		 * 
-		 * Read the JSON object from the file and deserialize it into a Java object
-		 * Assert the deserialized object
-		 * */
+		//Calling Json Reader Class & Its Assertion
+		DeviceDetailsJSONReader.DeviceJSONReader(null);
 		
 	}
 }
