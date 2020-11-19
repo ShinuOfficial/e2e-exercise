@@ -83,6 +83,10 @@ public void setAvailablequantitties(int availablequantitties) {
 	this.availablequantities = availablequantitties;
 }
 
+public TestDeserialized()
+    {
+     super();
+    }
 
 
 public TestDeserialized(String devicecode, String devicename, String deviceinfo, List<String> colorlist, String stock,
