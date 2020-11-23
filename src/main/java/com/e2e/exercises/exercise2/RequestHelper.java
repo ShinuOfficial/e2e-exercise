@@ -119,6 +119,7 @@ public class RequestHelper {
 		List<Object> list = new LinkedList<Object>();
 		Gson gson = new Gson();
 		JsonElement e = gson.fromJson(resp.asString(), JsonElement.class);
+		System.out.println(e.isJsonObject());
 		JsonObject jsonObject = e.getAsJsonObject();
 
 		int jsonelement_userId = jsonObject.get("userId").getAsInt();
