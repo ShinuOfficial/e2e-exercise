@@ -88,6 +88,7 @@ public TestDeserialized()
      super();
     }
 
+
 public TestDeserialized(String devicecode, String devicename, String deviceinfo, List<String> colorlist, String stock,
 		boolean serviceable, int availablequantitties) {
 	  super();
