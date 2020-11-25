@@ -1,16 +1,11 @@
 package com.e2e.exercises.exercise1.baseclass;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Properties;
-
-import org.apache.commons.io.FileUtils;
-
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
@@ -57,10 +52,21 @@ public class Commonclass {
 		
 	}	
 
-	public static String tostring(JSONObject jobject) {
-		return jobject.toJSONString();
-		
+	
+	public static String propEndpointReader(String data) throws Exception {
+	    FileReader reader = null;
+		try {
+			reader = new FileReader("Endpoint.properties");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+	      
+	    Properties p=new Properties();  
+	    p.load(reader);
+		return p.getProperty(data);
 	}
+	
 	
 	public static String propReader(String data) throws Exception {
 	    FileReader reader = null;
@@ -73,8 +79,7 @@ public class Commonclass {
 	      
 	    Properties p=new Properties();  
 	    p.load(reader);
-	    String pData = p.getProperty(data);
-		return pData;  
+		return p.getProperty(data);  
 	}
 	
 	public static JSONObject jsonObject() {
@@ -93,4 +98,39 @@ public class Commonclass {
 		return jobject;
 	}
 	
+	
+	@SuppressWarnings("deprecation")
+	public static JSONObject stringToJsonObject(String data) throws ParseException, Exception {
+		JSONParser parser = new JSONParser();
+		return (JSONObject) parser.parse(Commonclass.propEndpointReader(data));
+	}
+	
+	public static JSONObject jsonObjectParam() {
+		 JSONObject requestParams = new JSONObject();
+		 requestParams.put("userId", "12"); 
+		 requestParams.put("id", "101");
+		 requestParams.put("title", "this is my title");
+		 requestParams.put("body", "this is my body");
+		return requestParams;
+		
+	}
+	
+	public static JSONObject jsonObjectPutParam() {
+		 JSONObject requestParams = new JSONObject();
+		 requestParams.put("userId", "12"); 
+		 requestParams.put("id", "101");
+		 requestParams.put("title", "this is my title- update");
+		 requestParams.put("body", "this is my body- update");
+		return requestParams;
+		
+	}
+	
+	
+
+
+	public static String toString(JSONObject jobject) {
+		return jobject.toString();
+	}
+
+
 }

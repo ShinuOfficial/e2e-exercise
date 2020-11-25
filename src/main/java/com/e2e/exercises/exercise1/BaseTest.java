@@ -1,23 +1,29 @@
 package com.e2e.exercises.exercise1;
 
-import net.minidev.json.JSONObject;
-
 import java.io.File;
 
+//import org.json.JSONObject;
+import net.minidev.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.e2e.exercises.exercise1.baseclass.AssertionHelper;
 import com.e2e.exercises.exercise1.baseclass.Commonclass;
+import com.e2e.exercises.exercise1.baseclass.HelperClass;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.restassured.response.Response;
 
-public class BaseTest {
+
+
+
+public class BaseTest extends Commonclass{
 
 	@Test
 	public void test1() throws Exception {
 		JSONObject jobject = Commonclass.jsonObject();
 		
-		Commonclass.writeFile(Commonclass.propReader("filePath"),Commonclass.tostring(jobject));
+		Commonclass.writeFile(Commonclass.propReader("filePath"),Commonclass.toString(jobject));
 		
 		String propReader = Commonclass.propReader("filePath");
 		JSONObject readFile = Commonclass.readFile(propReader);
@@ -60,4 +66,32 @@ public class BaseTest {
 		 * */
 		
 	}
+	
+	@Test
+	public void getCall_getSingleId() throws Exception  {
+	 Response getResponse = HelperClass.getRequest(Commonclass.propEndpointReader("get"));
+	 AssertionHelper.assertId(getResponse);
+	 Integer fetchSingleID = HelperClass.fetchSingleID(getResponse);
+	 Response getResponseOneData = HelperClass.getRequest(Commonclass.propEndpointReader("get")+"/"+String.valueOf(fetchSingleID));
+	 AssertionHelper.assertSingleId(getResponseOneData,String.valueOf(fetchSingleID));
+	}
+	
+	
+	@Test
+	public void postRequestCall() throws Exception  {
+	Response postResponse = HelperClass.postRequest(Commonclass.propEndpointReader("get"));
+	JSONObject stringToJsonObject = Commonclass.stringToJsonObject("post_body");
+	AssertionHelper.assertSingleId(postResponse,stringToJsonObject.get("id").toString());
+	}
+	
+	@Test
+	public void putRequestCall() throws Exception  {
+		Response putResponse = HelperClass.putRequest(Commonclass.propEndpointReader("put"));
+		System.out.println(putResponse.getBody().asString());
+		JSONObject stringToJsonObject = Commonclass.stringToJsonObject("put_body");
+		AssertionHelper.assertSingleIdTitle(putResponse,stringToJsonObject.get("title").toString());
+	}
+	
+	
+	
 }

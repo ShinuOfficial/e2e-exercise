@@ -102,7 +102,7 @@ public TestDeserialized(String devicecode, String devicename, String deviceinfo,
 
 @Override
 public String toString() {
-	return "DevicePOJO [devicecode=" + devicecode + ", devicename=" + devicename + ", deviceinfo=" + deviceinfo
+	return "Pojo [devicecode=" + devicecode + ", devicename=" + devicename + ", deviceinfo=" + deviceinfo
 			+ ", colorlist=" + colorlist + ", stock=" + stock + ", serviceable=" + serviceable
 			+ ", availablequantitties=" + availablequantities + "]";
 }
