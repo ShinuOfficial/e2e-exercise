@@ -1,6 +1,5 @@
 package com.e2e.exercises.exercise1;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,19 +8,15 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Iterator;
 
-import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
+import org.json.*;
+import org.json.simple.parser.*;
 
-public class BaseTest {
+public class BaseTest2 {
 
 	@Test
 	public void test1() throws Exception {
@@ -35,32 +30,26 @@ public class BaseTest {
 		obj.put("available-quantities", new Integer(100));
 
 		JSONArray colorCodes = new JSONArray();
-		colorCodes.add("red");
-		colorCodes.add("black");
-		colorCodes.add("white");
+		colorCodes.put("red");
+		colorCodes.put("black");
+		colorCodes.put("white");
 		obj.put("color-codes", colorCodes);
-		
-		File theDir = new File("src/main/resources");
-		if (!theDir.exists()){
-		    theDir.mkdirs();
-		}
 
 		try {
 			FileWriter file = new FileWriter("src/main/resources/output.json");
-			file.write(obj.toJSONString());
+			file.write(obj.toString());
 			file.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		StringWriter out = new StringWriter();
-		obj.writeJSONString(out);
 
-		String actual = out.toString();
+		String actual = obj.toString();
 		System.out.print(actual);
 		
 	      System.out.println("Pretty Print of JSON:");
-	      //System.out.println(obj.to);
+			System.out.print(obj.toString(4));
+	    
 
 		try {
 			JSONAssert.assertEquals(
@@ -73,13 +62,14 @@ public class BaseTest {
 
 	@Test
 	public void test2() throws Exception {
-		Object txt = new JSONParser().parse(new FileReader("src/main/resources/output.json"));
-		JSONObject jo = (JSONObject) txt;
+		org.json.simple.JSONObject jo1 =  (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("src/main/resources/output.json"));
+		//JSONObject jo = (JSONObject) txt;
+		JSONObject jo = new JSONObject(jo1.toJSONString());
 		String deviceCode = (String) jo.get("device-code");
 		String deviceName = (String) jo.get("device-name");
 		String deviceInfo = (String) jo.get("device-info");
 		String Stock = (String) jo.get("stock");
-		int availableQuantities = (int) jo.get("available-quantities");
+		int availableQuantities =  (int) jo.get("available-quantities");
 		boolean serviceable = (boolean) jo.get("serviceable");
 		JSONArray colorCodes = (JSONArray) jo.get("color-codes");
 
@@ -98,8 +88,8 @@ public class BaseTest {
 		Assert.assertEquals(true, serviceable);
 		Assert.assertEquals(100, availableQuantities);
 
-		Object[] arr = new String[colorCodes.size()];
-		for (int i = 0; i < colorCodes.size(); i++) {
+		Object[] arr = new String[colorCodes.length()];
+		for (int i = 0; i < colorCodes.length(); i++) {
 			arr[i] = colorCodes.get(i);
 		}
 

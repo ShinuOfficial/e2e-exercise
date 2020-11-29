@@ -4,6 +4,7 @@
   <test thread-count="5" name="Test">
     <classes>
       <class name="com.e2e.exercises.exercise1.BaseTest"/>
+      <class name="com.e2e.exercises.exercise1.BaseTest2"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
