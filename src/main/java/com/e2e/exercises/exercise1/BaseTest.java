@@ -1,5 +1,6 @@
 package com.e2e.exercises.exercise1;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -27,6 +28,7 @@ public class BaseTest {
 		obj.addProperty("stock", "Instock");
 		obj.addProperty("serviceable", true);
 		obj.addProperty("available-quantities", 100);
+		obj.addProperty("SJ", "SJK");
 		
 		//Constructing a JSON array
 		
@@ -47,6 +49,9 @@ public class BaseTest {
 		//gb.create().toJson(obj);
 		System.out.println(deviceDetails);
 
+		File directory = new File ("/src//main/resources");
+		directory.mkdirs();
+		
 		//Saving the object in src/main/resources
 		FileWriter jsonFile = new FileWriter(System.getProperty("user.dir") + "/src//main/resources/outputFile.json");
 		jsonFile.write(deviceDetails);
